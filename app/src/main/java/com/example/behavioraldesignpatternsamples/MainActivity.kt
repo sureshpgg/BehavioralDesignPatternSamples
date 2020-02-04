@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import com.example.behavioraldesignpatternsamples.Strategy.Printer
+import com.example.behavioraldesignpatternsamples.Command.CommandProcessor
+import com.example.behavioraldesignpatternsamples.Command.OrderAddCommand
+import com.example.behavioraldesignpatternsamples.Command.OrderPayCommand
 
 class MainActivity : AppCompatActivity() {
     val TAG:String="MainActivity"
@@ -13,20 +15,14 @@ lateinit var clickbtn : Button
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         clickbtn=findViewById(R.id.observer)
-        val lowerCaseFormatter:(String)->String={it.toLowerCase()}
-        val upperCaseFormatter={it:String->it.toUpperCase()}
+
         clickbtn.setOnClickListener { view ->
 
-            val inputString = "ANDROID developer GUIDE to learn"
-
-            val lowerCasePrinter = Printer(lowerCaseFormatter)
-            lowerCasePrinter.printString(inputString)
-
-            val upperCasePrinter = Printer(upperCaseFormatter)
-            upperCasePrinter.printString(inputString)
-
-            val prefixPrinter = Printer { "Prefix: $it" }
-            prefixPrinter.printString(inputString)
+          CommandProcessor().addToQueue(OrderAddCommand(1L))
+                  .addToQueue(OrderAddCommand(2L))
+                  .addToQueue(OrderPayCommand(1L))
+                  .addToQueue(OrderPayCommand(2L))
+                  .processCommands()
 
 
         }
