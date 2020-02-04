@@ -7,6 +7,7 @@ import android.widget.Button
 import com.example.behavioraldesignpatternsamples.Command.CommandProcessor
 import com.example.behavioraldesignpatternsamples.Command.OrderAddCommand
 import com.example.behavioraldesignpatternsamples.Command.OrderPayCommand
+import com.example.behavioraldesignpatternsamples.State.AuthorizationPresenter
 
 class MainActivity : AppCompatActivity() {
     val TAG:String="MainActivity"
@@ -17,12 +18,13 @@ lateinit var clickbtn : Button
         clickbtn=findViewById(R.id.observer)
 
         clickbtn.setOnClickListener { view ->
+            val authorizationPresenter = AuthorizationPresenter()
 
-          CommandProcessor().addToQueue(OrderAddCommand(1L))
-                  .addToQueue(OrderAddCommand(2L))
-                  .addToQueue(OrderPayCommand(1L))
-                  .addToQueue(OrderPayCommand(2L))
-                  .processCommands()
+            authorizationPresenter.loginUser("admin")
+            Log.i(this.toString(),"$authorizationPresenter")
+
+            authorizationPresenter.logoutUser()
+            Log.i(this.toString(),"$authorizationPresenter")
 
 
         }
