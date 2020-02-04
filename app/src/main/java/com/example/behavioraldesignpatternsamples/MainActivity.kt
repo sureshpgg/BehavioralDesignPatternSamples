@@ -4,32 +4,29 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import com.example.behavioraldesignpatternsamples.observer.PrintingTextChangedListener
-import com.example.behavioraldesignpatternsamples.observer.TextView
+import com.example.behavioraldesignpatternsamples.Strategy.Printer
 
 class MainActivity : AppCompatActivity() {
     val TAG:String="MainActivity"
 lateinit var clickbtn : Button
-    lateinit var listener: PrintingTextChangedListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         clickbtn=findViewById(R.id.observer)
+        val lowerCaseFormatter:(String)->String={it.toLowerCase()}
+        val upperCaseFormatter={it:String->it.toUpperCase()}
         clickbtn.setOnClickListener { view ->
 
-            val textView = TextView().apply {
-                listener = PrintingTextChangedListener()
-            }
+            val inputString = "ANDROID developer GUIDE to learn"
 
-            with(textView) {
+            val lowerCasePrinter = Printer(lowerCaseFormatter)
+            lowerCasePrinter.printString(inputString)
 
+            val upperCasePrinter = Printer(upperCaseFormatter)
+            upperCasePrinter.printString(inputString)
 
-                textView.text = "Lorem ipsum"
-                Log.i(TAG,"@"+textView.text)
-
-                textView.text = "dolor sit amet"
-                Log.i(TAG,"@"+textView.text)
-            }
+            val prefixPrinter = Printer { "Prefix: $it" }
+            prefixPrinter.printString(inputString)
 
 
         }
