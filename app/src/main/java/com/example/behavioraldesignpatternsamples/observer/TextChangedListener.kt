@@ -1,4 +1,4 @@
-package com.example.behavioraldesignpatternsamples
+package com.example.behavioraldesignpatternsamples.observer
 
 import android.util.Log
 import kotlin.properties.Delegates
@@ -8,7 +8,8 @@ interface TextChangedListener {
 
     fun onTextChanged(oldText: String, newText: String)
 }
-class PrintingTextChangedListener : TextChangedListener {
+class PrintingTextChangedListener :
+    TextChangedListener {
 
     private var text = ""
 
